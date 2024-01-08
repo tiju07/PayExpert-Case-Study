@@ -42,13 +42,17 @@ namespace PayXpert
                 switch (choice)
                 {
                     case 1:
-                        Console.Write("\nEnter the ID of the employee:");
-                        int id;
-                        while (!int.TryParse(Console.ReadLine(), out id))
+                        try
                         {
-                            Console.Write("\nWrong entry! This field only accepts integer inputs.");
-                        }
-                        employeeService.GetEmployeeById(id);
+                            Console.Write("\nEnter the ID of the employee:");
+                            int id;
+                            while (!int.TryParse(Console.ReadLine(), out id))
+                            {
+                                Console.Write("\nWrong entry! This field only accepts integer inputs.");
+                            }
+                            employeeService.GetEmployeeById(id);
+
+                        } catch(Exception ex) {}
                         break;
                     case 2:
                         employeeService.GetAllEmployees();
