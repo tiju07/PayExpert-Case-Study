@@ -1,8 +1,8 @@
 ﻿using PayXpert.dao;
 using PayXpert.exception;
-namespace PayXpert
+namespace PayXpert.main
 {
-    internal class Program
+    internal class MainModule
     {
         static void Main(string[] args)
         {
@@ -15,7 +15,7 @@ namespace PayXpert
             int choice;
             do
             {
-                Console.WriteLine("\nEnter an appropriate choice from below:\n" +
+                Console.WriteLine("\nFollowing actions are available:\n" +
                 "1. Get an employee using ID\n" +
                 "2. Get all employees\n" +
                 "3. Add en employee\n" +
@@ -33,26 +33,30 @@ namespace PayXpert
                 "15. Add a Financial Record\n" +
                 "16. Get a Financial Record by it's ID\n" +
                 "17. Get Financial Records for a specific employee\n" +
-                "18. Get Financial Records for a specific year\n" + 
+                "18. Get Financial Records for a specific year\n" +
                 "0. Exit the menu");
-                while (!int.TryParse(Console.ReadLine(), out choice) && (choice <= 0 || choice >=18))
+                Console.Write("\nEnter your choice: ");
+                while (!int.TryParse(Console.ReadLine(), out choice) && (choice <= 0 || choice >= 18))
                 {
                     Console.WriteLine("Invalid choice. Try again!");
+                    Console.Write("\nEnter your choice: ");
                 }
                 switch (choice)
                 {
                     case 1:
                         try
                         {
-                            Console.Write("\nEnter the ID of the employee:");
+                            Console.Write("\nEnter the ID of the employee: ");
                             int id;
                             while (!int.TryParse(Console.ReadLine(), out id))
                             {
-                                Console.Write("\nWrong entry! This field only accepts integer inputs.");
+                                Console.WriteLine("\nWrong entry! This field only accepts integer inputs.");
+                                Console.Write("\nEnter the ID of the employee: ");
                             }
                             employeeService.GetEmployeeById(id);
 
-                        } catch(Exception ex) {}
+                        }
+                        catch (Exception ex) { }
                         break;
                     case 2:
                         employeeService.GetAllEmployees();
@@ -64,16 +68,16 @@ namespace PayXpert
                             mainFlag = false;
                             try
                             {
-                                Console.Write("\nEnter details for the employee:");
-                                Console.Write("Enter First Name: ");
+                                Console.Write("\nEnter details for the employee:-");
+                                Console.Write("\nEnter First Name: ");
                                 string firstName = Console.ReadLine().ToString();
-                                Console.Write("\nEnter Last Name");
+                                Console.Write("\nEnter Last Name: ");
                                 string lastName = Console.ReadLine().ToString();
                                 DateTime dateOfBirth = DateTime.MaxValue;
                                 flag = true;
                                 do
                                 {
-                                    Console.Write("\nEnter Date of Birth in \"YYYY-MM-DD\" format:");
+                                    Console.Write("\nEnter Date of Birth in \"YYYY-MM-DD\" format: ");
                                     try
                                     {
                                         dateOfBirth = DateTime.ParseExact(Console.ReadLine(), "yyyy-MM-dd", null);
@@ -92,7 +96,7 @@ namespace PayXpert
                                 string gender = Console.ReadLine();
                                 Console.Write("\nEnter Email ID of the employee: ");
                                 string email = Console.ReadLine();
-                                Console.Write("\nEnter phone number of the employee");
+                                Console.Write("\nEnter phone number of the employee: ");
                                 string phoneNumber = Console.ReadLine();
                                 Console.Write("\nEnter address of the employee: ");
                                 string address = Console.ReadLine();
@@ -102,7 +106,7 @@ namespace PayXpert
                                 flag = true;
                                 do
                                 {
-                                    Console.Write("\nEnter Joining Date of the employee in \"YYYY-MM-DD\" format:");
+                                    Console.Write("\nEnter Joining Date of the employee in \"YYYY-MM-DD\" format: ");
                                     try
                                     {
                                         joiningDate = DateTime.ParseExact(Console.ReadLine(), "yyyy-MM-dd", null);
@@ -121,7 +125,7 @@ namespace PayXpert
                                 flag = true;
                                 do
                                 {
-                                    Console.Write("\nEnter Termination Date of the employee in \"YYYY-MM-DD\" format, \"-\" if not available:");
+                                    Console.Write("\nEnter Termination Date of the employee in \"YYYY-MM-DD\" format, \"-\" if not available: ");
                                     var temp = Console.ReadLine();
                                     if (temp != "-")
                                     {
@@ -159,7 +163,7 @@ namespace PayXpert
                             mainFlag = true;
                             try
                             {
-                                Console.Write("\nEnter details to update for the employee(If you do not wish to update a specific information, just type \"-\"):");
+                                Console.WriteLine("\nEnter details to update for the employee(If you do not wish to update a specific information, just type \"-\"):-");
                                 Console.Write("Enter the ID of the employee which needs to be updated: ");
                                 if (!int.TryParse(Console.ReadLine(), out employeeID))
                                 {
@@ -168,13 +172,13 @@ namespace PayXpert
                                 Console.Write("\nEnter First Name: ");
                                 string? temp = Console.ReadLine();
                                 string? firstName = temp != "-" ? temp : null;
-                                Console.Write("\nEnter Last Name");
+                                Console.Write("\nEnter Last Name: ");
                                 temp = Console.ReadLine();
                                 string? lastName = temp != "-" ? temp : null;
                                 DateTime? dateOfBirth = null;
                                 do
                                 {
-                                    Console.Write("\nEnter Date of Birth of the employee in \"YYYY-MM-DD\" format, \"-\" if no update is required:");
+                                    Console.Write("\nEnter Date of Birth of the employee in \"YYYY-MM-DD\" format, \"-\" if no update is required: ");
                                     temp = Console.ReadLine();
                                     if (temp != "-")
                                     {
@@ -194,26 +198,26 @@ namespace PayXpert
                                     }
                                     else { flag = false; }
                                 } while (flag);
-                                Console.Write("\nEnter gender of the employee: ");
+                                Console.Write("\nEnter Gender of the employee: ");
                                 temp = Console.ReadLine();
                                 string? gender = temp != "-" ? temp : null;
                                 Console.Write("\nEnter Email ID of the employee: ");
                                 temp = Console.ReadLine();
                                 string? email = temp != "-" ? temp : null;
-                                Console.Write("\nEnter phone number of the employee");
+                                Console.Write("\nEnter Phone Number of the employee: ");
                                 temp = Console.ReadLine();
                                 string? phoneNumber = temp != "-" ? temp : null;
-                                Console.Write("\nEnter address of the employee: ");
+                                Console.Write("\nEnter Address of the employee: ");
                                 temp = Console.ReadLine();
                                 string? address = temp != "-" ? temp : null;
-                                Console.Write("\nEnter designation of the employee: ");
+                                Console.Write("\nEnter Designation of the employee: ");
                                 temp = Console.ReadLine();
                                 string? designation = temp != "-" ? temp : null;
                                 DateTime? joiningDate = null;
                                 flag = true;
                                 do
                                 {
-                                    Console.Write("\nEnter Joining Date of the employee in \"YYYY-MM-DD\" format, \"-\" if no update is required:");
+                                    Console.Write("\nEnter Joining Date of the employee in \"YYYY-MM-DD\" format, \"-\" if no update is required: ");
                                     temp = Console.ReadLine();
                                     if (temp != "-")
                                     {
@@ -230,13 +234,14 @@ namespace PayXpert
                                         {
                                             Console.Write("\nThe entered data was in wrong format. Please retry by entering data in correct format(YYYY-MM-DD)");
                                         }
-                                    } else { flag = false; }
+                                    }
+                                    else { flag = false; }
                                 } while (flag);
                                 DateTime? terminationDate = null;
                                 flag = true;
                                 do
                                 {
-                                    Console.Write("\nEnter Termination Date of the employee in \"YYYY-MM-DD\" format, \"-\" if not available:");
+                                    Console.Write("\nEnter Termination Date of the employee in \"YYYY-MM-DD\" format, \"-\" if not available: ");
                                     temp = Console.ReadLine();
                                     if (temp != "-")
                                     {
@@ -272,7 +277,7 @@ namespace PayXpert
                             mainFlag = true;
                             try
                             {
-                                Console.Write("Enter the ID of the employee whose age is to be calculated: ");
+                                Console.Write("\nEnter the ID of the employee whose age is to be calculated: ");
                                 if (!int.TryParse(Console.ReadLine(), out employeeID))
                                 {
                                     throw new InvalidDataException("Invalid ID. Please try again.");
@@ -280,7 +285,7 @@ namespace PayXpert
                                 employeeService.CalculateAge(employeeID);
                                 mainFlag = false;
                             }
-                            catch (Exception ex) { mainFlag = true; }
+                            catch (Exception ex) { Console.WriteLine(ex.Message); mainFlag = true; }
                         } while (mainFlag);
                         break;
                     case 6:
@@ -294,7 +299,7 @@ namespace PayXpert
                                 employeeService.RemoveEmployee(employeeID);
                                 mainFlag = false;
                             }
-                            catch (Exception ex) { mainFlag = true; }
+                            catch (Exception ex) { Console.WriteLine(ex.Message); mainFlag = true; }
                         } while (mainFlag);
                         break;
                     case 7:
@@ -346,7 +351,7 @@ namespace PayXpert
                                 payrollService.GeneratePayroll(employeeID, startDate, endDate);
                                 mainFlag = false;
                             }
-                            catch (Exception ex) { mainFlag = true; }
+                            catch (Exception ex) { Console.WriteLine(ex.Message); mainFlag = true; }
                         } while (mainFlag);
                         break;
                     case 8:
@@ -361,7 +366,7 @@ namespace PayXpert
                                 payrollService.GetPayrollById(payrollID);
                                 mainFlag = false;
                             }
-                            catch (Exception ex) { mainFlag = true; }
+                            catch (Exception ex) { Console.WriteLine(ex.Message); mainFlag = true; }
                         } while (mainFlag);
                         break;
                     case 9:
@@ -375,7 +380,7 @@ namespace PayXpert
                                 payrollService.GetPayrollsForEmployee(employeeID);
                                 mainFlag = false;
                             }
-                            catch (Exception ex) { mainFlag = true; }
+                            catch (Exception ex) { Console.WriteLine(ex.Message); mainFlag = true; }
                         } while (mainFlag);
                         break;
                     case 10:
@@ -424,7 +429,8 @@ namespace PayXpert
                                 } while (flag);
                                 payrollService.GetPayrollsForPeriod(startDate, endDate);
                                 mainFlag = false;
-                            } catch (Exception ex) { mainFlag = true; }
+                            }
+                            catch (Exception ex) { mainFlag = true; }
                         } while (mainFlag);
                         break;
                     case 11:
@@ -434,20 +440,24 @@ namespace PayXpert
                             mainFlag = true;
                             try
                             {
-                                Console.Write("\nEnter the ID of the employee:");
+                                Console.Write("\nEnter the ID of the employee: ");
                                 while (!int.TryParse(Console.ReadLine(), out employeeID))
                                 {
-                                    Console.Write("\nWrong entry! This field only accepts integer inputs.");
+                                    Console.WriteLine("\nWrong entry! This field only accepts integer inputs.");
+                                    Console.Write("\nEnter the ID of the employee: ");
                                 }
                                 Console.Write("\nEnter year to calculate tax: ");
                                 while (!int.TryParse(Console.ReadLine(), out year))
                                 {
-                                    Console.Write("\nWrong entry! This field only accepts integer inputs.");
+                                    Console.WriteLine("\nWrong entry! This field only accepts integer inputs.");
+                                    Console.Write("\nEnter year to calculate tax: ");
                                 }
                                 taxService.CalculateTax(employeeID, year);
                                 mainFlag = false;
-                            }catch(Exception ex) { mainFlag = true;}
-                        }while (mainFlag);
+                            }
+                            catch (TaxCalculationException ex) { mainFlag = false; }
+                            catch (Exception ex) { Console.WriteLine(ex.Message); mainFlag = true; }
+                        } while (mainFlag);
                         break;
                     case 12:
                         int taxID;
@@ -456,14 +466,16 @@ namespace PayXpert
                             mainFlag = true;
                             try
                             {
-                                Console.Write("\nEnter the ID to get tax details of:");
+                                Console.Write("\nEnter the ID to get tax details of: ");
                                 while (!int.TryParse(Console.ReadLine(), out taxID))
                                 {
                                     Console.Write("\nWrong entry! This field only accepts integer inputs.");
+                                    Console.Write("\nEnter the ID to get tax details of: ");
                                 }
                                 taxService.GetTaxById(taxID);
                                 mainFlag = false;
-                            } catch (Exception ex) { mainFlag = true; }
+                            }
+                            catch (Exception ex) { mainFlag = true; }
                         } while (mainFlag);
                         break;
                     case 13:
@@ -472,10 +484,11 @@ namespace PayXpert
                             mainFlag = true;
                             try
                             {
-                                Console.Write("\nEnter the ID of the employee to get tax details of:");
+                                Console.Write("\nEnter the ID of the employee to get tax details of: ");
                                 while (!int.TryParse(Console.ReadLine(), out employeeID))
                                 {
                                     Console.Write("\nWrong entry! This field only accepts integer inputs.");
+                                    Console.Write("\nEnter the ID of the employee to get tax details of: ");
                                 }
                                 taxService.GetTaxesForEmployee(employeeID);
                                 mainFlag = false;
@@ -489,14 +502,16 @@ namespace PayXpert
                             mainFlag = true;
                             try
                             {
-                                Console.Write("\nEnter the year to get tax details of:");
+                                Console.Write("\nEnter the year to get tax details of: ");
                                 while (!int.TryParse(Console.ReadLine(), out year))
                                 {
                                     Console.Write("\nWrong entry! This field only accepts integer inputs.");
+                                    Console.Write("\nEnter the year to get tax details of: ");
                                 }
                                 taxService.GetTaxesForYear(year);
                                 mainFlag = false;
                             }
+                            catch(TaxCalculationException tcex) { mainFlag = false; }
                             catch (Exception ex) { mainFlag = true; }
                         } while (mainFlag);
                         break;
@@ -510,24 +525,27 @@ namespace PayXpert
                             mainFlag = true;
                             try
                             {
-                                Console.Write("\nEnter the ID of the employee:");
+                                Console.Write("\nEnter the ID of the employee: ");
                                 while (!int.TryParse(Console.ReadLine(), out employeeID))
                                 {
                                     Console.Write("\nWrong entry! This field only accepts integer inputs.");
+                                    Console.Write("\nEnter the ID of the employee: ");
                                 }
-                                Console.Write("\nEnter the year of the record:");
+                                Console.Write("\nEnter the Year of the record: ");
                                 while (!int.TryParse(Console.ReadLine(), out recordDate))
                                 {
                                     Console.Write("\nWrong entry! This field only accepts integer inputs.");
+                                    Console.Write("\nEnter the Year of the record: ");
                                 }
-                                Console.Write("\nEnter the description for the record:");
+                                Console.Write("\nEnter a Description for the record: ");
                                 description = Console.ReadLine();
-                                Console.Write("\nEnter the amount of the financial record");
+                                Console.Write("\nEnter an Amount for the financial record: ");
                                 while (!double.TryParse(Console.ReadLine(), out amount))
                                 {
                                     Console.Write("\nWrong entry! This field only accepts numeric inputs.");
+                                    Console.Write("\nEnter an Amount for the financial record: ");
                                 }
-                                Console.Write("\nEnter the type of the record: ");
+                                Console.Write("\nEnter the Type of the record: ");
                                 recordType = Console.ReadLine();
                                 financialRecordService.AddFinancialRecord(employeeID, recordDate, description, amount, recordType);
                                 mainFlag = false;
@@ -542,10 +560,11 @@ namespace PayXpert
                             mainFlag = true;
                             try
                             {
-                                Console.Write("\nEnter the ID to get financial record details of:");
+                                Console.Write("\nEnter the ID to get financial record details of: ");
                                 while (!int.TryParse(Console.ReadLine(), out recordID))
                                 {
                                     Console.Write("\nWrong entry! This field only accepts integer inputs.");
+                                    Console.Write("\nEnter the ID to get financial record details of: ");
                                 }
                                 financialRecordService.GetFinancialRecordById(recordID);
                                 mainFlag = false;
@@ -559,10 +578,11 @@ namespace PayXpert
                             mainFlag = true;
                             try
                             {
-                                Console.Write("\nEnter the ID of the employee to get financial record details of:");
+                                Console.Write("\nEnter the ID of the employee to get financial record details of: ");
                                 while (!int.TryParse(Console.ReadLine(), out employeeID))
                                 {
                                     Console.Write("\nWrong entry! This field only accepts integer inputs.");
+                                    Console.Write("\nEnter the ID of the employee to get financial record details of: ");
                                 }
                                 financialRecordService.GetFinancialRecordsForEmployee(employeeID);
                                 mainFlag = false;
@@ -576,14 +596,16 @@ namespace PayXpert
                             mainFlag = true;
                             try
                             {
-                                Console.Write("\nEnter the year to get financial record details of:");
+                                Console.Write("\nEnter the year to get financial record details of: ");
                                 while (!int.TryParse(Console.ReadLine(), out year))
                                 {
                                     Console.Write("\nWrong entry! This field only accepts integer inputs.");
+                                    Console.Write("\nEnter the year to get financial record details of: ");
                                 }
                                 financialRecordService.GetFinancialRecordsForDate(year);
                                 mainFlag = false;
                             }
+                            catch (FinancialRecordException frex) { mainFlag = false; }
                             catch (Exception ex) { mainFlag = true; }
                         } while (mainFlag);
                         break;
@@ -594,75 +616,8 @@ namespace PayXpert
                         Console.Write("\nInvalid choice. Please enter a choice in integer format between 0 and 18.");
                         break;
                 }
+                Thread.Sleep(2000);
             } while (choice != 0);
-
-
-            /*
-            SqlConnection conn = util.DBConnUtil.ReturnConnectionString();
-
-            SqlCommand cmd = conn.CreateCommand();
-
-            List<string> list = new List<string>();
-            cmd.CommandText = "select FirstName from Employee";
-            cmd.Connection = conn;
-            conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                list.Add(reader.GetString(0));
-            }
-            conn.Close();
-            
-            Console.WriteLine("First names of all employees: ");
-            foreach (string item in list)
-            {
-                Console.WriteLine(item);
-            }
-
-            EmployeeService employeeService = new EmployeeService();
-            
-            employeeService.AddEmployee("Richard", "Jackson", new DateTime(2001, 4, 2), "Male", "richardjk@gmail.com", "+919546857413", "P.O. Box 420, 3564 Lacinia Rd.", "Project Lead", new DateTime(2020, 7, 5), null);
-            
-            employeeService.AddEmployee("Ray", "Jones", new DateTime(1995, 7, 21), "Male", "rayjones@hotmail.com", "+9176481234", "P.O. Box 420, 3564 Lacinia Rd.", "Systems Engineer", new DateTime(2019, 2, 21), null);
-            
-            employeeService.GetAllEmployees();
-            
-
-            employeeService.GetEmployeeById(2002);
-            
-            employeeService.RemoveEmployee(2003);
-            
-
-            employeeService.UpdateEmployee(2002, "Richard", "Jones", new DateTime(1995, 7, 21), "Male", "richardjones@hotmail.com", "+917648123458", "Ap #176-4381 Sagittis Rd.", "Project Mangager", new DateTime(2019, 02, 21), null);
-
-            PayrollService payrollService = new PayrollService();
-
-            payrollService.GeneratePayroll(2, new DateTime(2020, 8, 4), new DateTime(2021, 8, 10));
-            
-            payrollService.GetPayrollById(150);
-            
-            payrollService.GetPayrollsForEmployee(1);
-            
-            payrollService.GetPayrollsForPeriod(new DateTime(2024, 1, 1), new DateTime(2024, 12, 31));
-
-            TaxService taxService = new TaxService();
-
-            taxService.CalculateTax(1, 2022);
-
-            taxService.GetTaxById(5);
-
-            taxService.GetTaxesForEmployee(2);
-
-            taxService.GetTaxesForYear(2022);
-            
-
-            FinancialRecordService frService = new FinancialRecordService();
-            frService.AddFinancialRecord(2, 2024, "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.", 5647.8, "Expense");
-
-            frService.GetFinancialRecordById(2);
-            frService.GetFinancialRecordsForDate(2022);
-            frService.GetFinancialRecordsForEmployee(5);
-            */
         }
     }
 }
