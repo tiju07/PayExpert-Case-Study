@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using PayXpert.exception;
 
 namespace PayXpert.dao 
 {
@@ -31,19 +32,18 @@ namespace PayXpert.dao
 
             List<string> genders = new List<string>() { "Male", "Female", "Others" };
 
-            if (!Regex.IsMatch(firstName, "([a-zA-Z])")) { Console.WriteLine("firstname"); return false;  }
+            if (!Regex.IsMatch(firstName, "([a-zA-Z])")) { throw new InvalidInputException("Invalid First Name!");}
 
-            if (!Regex.IsMatch(lastName, "([a-zA-Z])")) { Console.WriteLine("lastname"); return false; }
+            if (!Regex.IsMatch(lastName, "([a-zA-Z])")) { throw new InvalidInputException("Invalid Lase Name!"); }
 
-            if (!genders.Contains(Gender)) { Console.WriteLine("gender"); return false; }
+            if (!genders.Contains(Gender)) { throw new InvalidInputException("Invalid Gender!");}
 
-            if (!Regex.IsMatch(Email, "^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})$")) { Console.WriteLine("email"); return false; }
+            if (!Regex.IsMatch(Email, "^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})$")) { throw new InvalidInputException("Invalid Email!"); }
 
-            if (!Regex.IsMatch(PhoneNumber, "\\+([0-9]{12,})")) { Console.WriteLine("phonenumber"); return false; }
+            if (!Regex.IsMatch(PhoneNumber, "\\+([0-9]{12,})")) { throw new InvalidInputException("Invalid Phone Number!"); }
 
-            if (Address.Length < 3) { Console.WriteLine("address"); return false; }
-            if (Designation.Length < 3) { Console.WriteLine("designation"); return false; }
-            //For the DateOnly variables, the validation will depend on how input is taken.
+            if (Address.Length < 3) { throw new InvalidInputException("Invalid Address!"); }
+            if (Designation.Length < 2) { throw new InvalidInputException("Invalid Designation!"); }
 
             return true;
         }
@@ -64,19 +64,19 @@ namespace PayXpert.dao
         /// <returns></returns>
         public static bool UpdateEmployeeValidation(string? firstName, string? lastName, DateTime? DateOfBirth, string? Gender, string? Email, string? PhoneNumber, string? Address, string? Designation, DateTime? JoiningDate, DateTime? TerminationDate)
         {
-            if (firstName != null && !Regex.IsMatch(firstName, "([a-zA-Z])")) { return false; }
+            if (firstName != null && !Regex.IsMatch(firstName, "([a-zA-Z])")) { throw new InvalidInputException("Invalid First Name!"); }
 
-            if (lastName != null && !Regex.IsMatch(lastName, "([a-zA-Z])")) { return false; }
+            if (lastName != null && !Regex.IsMatch(lastName, "([a-zA-Z])")) { throw new InvalidInputException("Invalid Lase Name!"); }
 
-            if (Gender != null && !genders.Contains(Gender)) { return false; }
+            if (Gender != null && !genders.Contains(Gender)) { throw new InvalidInputException("Invalid Gender!"); }
 
-            if (Email != null && !Regex.IsMatch(Email, "^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})$")) { return false; }
+            if (Email != null && !Regex.IsMatch(Email, "^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})$")) { throw new InvalidInputException("Invalid Email!"); }
 
-            if (PhoneNumber != null && !Regex.IsMatch(PhoneNumber, "\\+([0-9]{12,})")) { return false; }
+            if (PhoneNumber != null && !Regex.IsMatch(PhoneNumber, "\\+([0-9]{12,})")) { throw new InvalidInputException("Invalid Phone Number!"); }
 
-            if (Address != null && Address.Length < 3) { return false; }
+            if (Address != null && Address.Length < 3) { throw new InvalidInputException("Invalid Address!"); }
 
-            if (Designation != null && Designation.Length < 3) { return false; }
+            if (Designation != null && Designation.Length < 3) { throw new InvalidInputException("Invalid Designation!"); }
             //For the DateOnly variables, the validation will depend on how input is taken.
 
             return true;
@@ -95,10 +95,10 @@ namespace PayXpert.dao
             //All permissible record types
             List<string> recordTypes = ["expense", "income", "tax payment"];
 
-            if (recordDate > (int)DateTime.Now.Year) return false;
-            if (!Regex.IsMatch(description, "([a-zA-Z]+)([0-9]*)")) { return false; }
-            if(amount < 0) return false;
-            if (!recordTypes.Contains(recordType.ToLower())) return false;
+            if (recordDate > (int)DateTime.Now.Year) throw new InvalidInputException("Invalid Record Date!"); ;
+            if (!Regex.IsMatch(description, "([a-zA-Z]+)([0-9]*)")) throw new InvalidInputException("Invalid Description!");
+            if (amount < 0) throw new InvalidInputException("Invalid Amount!"); ;
+            if (!recordTypes.Contains(recordType.ToLower())) throw new InvalidInputException("Invalid Record Type!");
 
             return true;
         }
