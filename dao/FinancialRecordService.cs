@@ -22,11 +22,8 @@ namespace PayXpert.dao
                 conn.Open();
                 if (conn.State != System.Data.ConnectionState.Open) { throw new DatabaseConnectionException("Could not connect to the database!"); }
 
-                //bool validationResul;
-                
-                ValidationService.AddFinancialRecordValidation(recordDate, description, amount, recordType);
-                
-                //if (!validationResult) { throw new InvalidInputException("At least one of your inputs was incorrect. Check your data and try again!"); }
+                bool validationResult = ValidationService.AddFinancialRecordValidation(recordDate, description, amount, recordType);
+                if (!validationResult) { throw new InvalidInputException("At least one of your inputs was incorrect. Check your data and try again!"); }
 
                 string q = "INSERT INTO FinancialRecord(EmployeeID, RecordDate, Description, Amount, RecordType) VALUES (@EmployeeID, @RecordDate, @Description, @Amount, @RecordType)";
                 SqlCommand cmd = new SqlCommand(q, conn);
@@ -75,7 +72,6 @@ namespace PayXpert.dao
                 string q = $"SELECT * FROM FinancialRecord WHERE RecordDate={recordDate}";
                 DatabaseContext.GetDataFromDB(q, conn, $"Following are the financial records for the year {recordDate}", true);
             }
-            catch (FinancialRecordException frex) { Console.WriteLine(frex.Message); throw new FinancialRecordException(frex.Message); }
             catch (InvalidInputException iiex) { Console.WriteLine(iiex.Message); throw new Exception(iiex.Message); }
             catch (DatabaseConnectionException dbcex) { Console.WriteLine(dbcex.Message); }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw new Exception(ex.Message); }

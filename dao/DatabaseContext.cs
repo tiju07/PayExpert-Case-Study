@@ -26,7 +26,7 @@ namespace PayXpert.dao
             }
             if (displayData)
             {
-                Console.WriteLine("\n"+customMessage);
+                Console.WriteLine(customMessage);
 
                 while (reader.Read())
                 {

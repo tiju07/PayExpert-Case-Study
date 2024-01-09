@@ -18,10 +18,10 @@ namespace PayXpert.dao
                 conn.Open();
                 if (conn.State != System.Data.ConnectionState.Open) { throw new DatabaseConnectionException("Could not connect to the database!"); }
 
-                //bool validationResult;
-                ValidationService.AddEmployeeValidation(firstName, lastName, dateOfBirth, gender, email, phoneNumber, address, designation, joiningDate, terminationDate);
+                bool validationResult = ValidationService.AddEmployeeValidation(firstName, lastName, dateOfBirth, gender, email, phoneNumber, address, designation, joiningDate, terminationDate);
 
-                //if (!validationResult) { throw new InvalidInputException("At least one of your inputs was incorrect. Check your data and try again!"); }
+                if (!validationResult) { throw new InvalidInputException("At least one of your inputs was incorrect. Check your data and try again!"); }
+                //2023-01-01
                 string dob = dateOfBirth.Year.ToString() + "-" + dateOfBirth.Month.ToString() + "-" + dateOfBirth.Day.ToString();
                 string jd = joiningDate.Year.ToString() + "-" + joiningDate.Month.ToString() + "-" + joiningDate.Day.ToString();
 
@@ -138,10 +138,9 @@ namespace PayXpert.dao
                 conn.Open();
                 if (conn.State != System.Data.ConnectionState.Open) { throw new DatabaseConnectionException("Could not connect to the database!"); }
 
-                //bool validationResult;
-                ValidationService.UpdateEmployeeValidation(firstName, lastName, dateOfBirth, gender, email, phoneNumber, address, designation, joiningDate, terminationDate);
+                bool validationResult = ValidationService.UpdateEmployeeValidation(firstName, lastName, dateOfBirth, gender, email, phoneNumber, address, designation, joiningDate, terminationDate);
 
-                //if (!validationResult) { throw new InvalidInputException("You have entered invalid data! Check your data and try again!"); }
+                if (!validationResult) { throw new InvalidInputException("You have entered invalid data! Check your data and try again!"); }
 
                 string dob = null!, jd = null!;
                 if (dateOfBirth != null)
